@@ -10,6 +10,75 @@
     <link rel="stylesheet" href="{% static 'selections/css/choice.css' %}">
     <script src="//code.jquery.com/jquery-3.2.1.min.js"></script>
     <script src="//code.jquery.com/mobile/1.5.0-alpha.1/jquery.mobile-1.5.0-alpha.1.min.js"></script>
+    <style>
+        @font-face {
+            font-family: 'Pretendard-Regular';
+            src: url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');
+            font-weight: 400;
+            font-style: normal;
+        }
+        
+        body{
+            background-color: black;
+        }
+        
+        .title{
+            display: flex;
+            font-family: 'Pretendard-Regular';
+            height: 10vh;
+            margin-top: 15vh;
+            justify-content: center;
+            font-size: 6vh;
+            color: white;
+        }
+        
+        .photobox{
+            display: flex;
+            height: 50vh;
+            width: calc(50vh * 640 / 844);
+            outline: 1px solid black;
+            margin-left: 50%;
+            transform: translate(calc(-25vh * 640 / 844), 0);
+            background-image: url("https://image.musinsa.com/mfile_s01/_shopstaff/view.staff_6317e5da138a3.jpg?20220907093932");
+            background-size: 100%;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .choicebox{
+            display: flex;
+            height: 10vh;
+            width: calc(50vh * 640 / 844);
+            margin-left: 50%;
+            transform: translate(calc(-25vh * 640 / 844), 0);
+            margin-top: 5vh;
+            justify-content: center;
+        }
+        
+        .choice_btn{
+            width: 49%;
+            height: 10vh;
+        }
+        
+        .emozy{
+            position: absolute;
+            left: 50%;
+            transform: translate(-5vh, 0);
+            top: 40vh;
+            z-index: 1;
+            font-size: 10vh;
+            visibility: hidden;
+        }
+        
+        .direction{
+            display: flex;
+            justify-content: space-evenly;
+            margin-top: 5vh;
+            height: 10vh;
+            font-size: 5vh;
+            color: white;
+        }
+    </style>
 </head>
 <body>
     <div class="title">MUSINSA</div>
@@ -19,6 +88,91 @@
     <div class="direction"><span>⇦</span><span>BAD</span><span>GOOD</span><span>⇨</span></div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
     {% load static %}
-    <script src="{% static 'selections/js/choice.js' %}"></script>
+    <script>
+        var photos = [
+    "https://image.musinsa.com/mfile_s01/_shopstaff/view.staff_631930d56bfac.jpg?20220908091426",
+    "https://image.musinsa.com/mfile_s01/_shopstaff/view.staff_63195a58f4161.jpg?20220908120258",
+    "https://image.musinsa.com/mfile_s01/_shopstaff/view.staff_63195a5a7545e.jpg?20220908120258",
+    "https://image.musinsa.com/mfile_s01/_shopstaff/view.staff_63195a51351a7.jpg?20220908120258",
+    "https://image.musinsa.com/mfile_s01/_shopstaff/view.staff_6321899ec2d9f.jpg?20220914170028",
+    "https://image.musinsa.com/mfile_s01/_shopstaff/view.staff_6321890d24740.jpg?20220914165633",
+    "https://image.musinsa.com/mfile_s01/_shopstaff/view.staff_632187b6b268f.jpg?20220914165100",
+    "https://image.musinsa.com/mfile_s01/_shopstaff/view.staff_6321815810a98.jpg?20220914163804",
+    "https://image.musinsa.com/mfile_s01/_shopstaff/view.staff_6321809981358.jpg?20220914163434",
+    "https://image.musinsa.com/mfile_s01/_shopstaff/view.staff_632178b976206.jpg?20220914161429"
+]
+
+$(function(){
+    $("div.photobox").on("swipeleft", swipeleftHandler);
+
+    function swipeleftHandler(event){
+        document.querySelector(".bad").style.visibility = "visible";
+        var photobox = document.querySelector(".photobox");
+        photobox.animate({marginLeft: "-100vw"}, 400)
+        setTimeout(function(){
+            document.querySelector(".bad").style.visibility = "hidden";
+            if(photos.length != 0){
+                photobox.style.backgroundImage = "url(" + photos.pop() + ")"}
+            else{
+                location.href = "/selections/done"
+            }
+        }, 400);
+    }
+})
+
+$(function(){
+    $("div.photobox").on("swiperight", swiperightHandler);
+
+    function swiperightHandler(event){
+        document.querySelector(".good").style.visibility = "visible";
+        var photobox = document.querySelector(".photobox");
+        photobox.animate({marginLeft: "200vw"}, 400)
+        setTimeout(function(){
+            document.querySelector(".good").style.visibility = "hidden";
+            if(photos.length != 0){
+                photobox.style.backgroundImage = "url(" + photos.pop() + ")"}
+            else{
+                location.href = "/selections/done"
+            }
+        }, 400);
+    }
+})
+
+$(function(){
+    $(".bad_btn").on("click", swipeleftHandler);
+
+    function swipeleftHandler(event){
+        document.querySelector(".bad").style.visibility = "visible";
+        var photobox = document.querySelector(".photobox");
+        photobox.animate({marginLeft: "-100vw"}, 400)
+        setTimeout(function(){
+            document.querySelector(".bad").style.visibility = "hidden";
+            if(photos.length != 0){
+                photobox.style.backgroundImage = "url(" + photos.pop() + ")"}
+            else{
+                location.href = "/selections/done"
+            }
+        }, 400);
+    }
+})
+
+$(function(){
+    $(".good_btn").on("click", swiperightHandler);
+
+    function swiperightHandler(event){
+        document.querySelector(".good").style.visibility = "visible";
+        var photobox = document.querySelector(".photobox");
+        photobox.animate({marginLeft: "200vw"}, 400)
+        setTimeout(function(){
+            document.querySelector(".good").style.visibility = "hidden";
+            if(photos.length != 0){
+                photobox.style.backgroundImage = "url(" + photos.pop() + ")"}
+            else{
+                location.href = "/selections/done"
+            }
+        }, 400);
+    }
+})
+    </script>
 </body>
 </html>
